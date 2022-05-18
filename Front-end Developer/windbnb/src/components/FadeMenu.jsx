@@ -16,17 +16,21 @@ const FadeMenu = ({
     const [adults, setadults] = useState(0);
     const [children, setchildren] = useState(0);
     const menu = useRef(null);
+    const body = useRef(null);
+
     const [height, setheight] = useState(0);
 
     useEffect(() => {
         setheight(menu.current.offsetHeight);
+        console.log(menu.current.offsetHeight)
         if (isOpen) {
-            menu.current.style.height = `${height}px`;
+            animate('.fade-menu', { y: height }, { duration: 0.5 });
         }
-    }, [menu]);
+    }, []);
 
     useEffect(() => {
         if (isOpen) {
+            
             animate('.fade-menu', { y: height }, { duration: 0.5 });
             // rgba(79, 79, 79, 0.4)
             animate(
@@ -41,11 +45,12 @@ const FadeMenu = ({
                 { backgroundColor: 'rgba(0, 0, 0, 0)' },
                 { duration: 1 }
             );
+            menu.current.style.display = 'hidden';
         }
     }, [isOpen]);
 
     const activeClass =
-        ' w-full px-7 py-2 h-full border-[1px] rounded-[16px] border-black drop-shadow-sm ';
+        ' w-full px-7 py-2 h-full md:border-[1px] rounded-[16px] md:border-black drop-shadow-sm ';
     const defaultClass =
         'w-full px-7 py-2 h-full border-[1px] border-transparent  hover:ease-in duration-300 transition';
     const hoverClass = 'hover:cursor-pointer';
@@ -74,20 +79,25 @@ const FadeMenu = ({
     return (
         <>
             <div
-                className="fade-menu flex flex-col pt-5 md:pt-16 h-5/6 md:h-2/4"
+                className="fade-menu flex flex-col pt-5 md:pt-16 h-4/6 md:h-2/4"
                 ref={menu}
             >
                 <div className="h-full w-full justify-center items-start font-mulis">
                     <div className="container mx-auto w-11/12 font-semibold mb-5 md:hidden items-center flex flex-row justify-between">
                         <p>Edit your seach</p>
-                        <button className="flex flex-row items-center h-full" onClick={()=>setisOpen(false)}>
-                            <span className="material-symbols-rounded">close</span>
+                        <button
+                            className="flex flex-row items-center h-full"
+                            onClick={() => setisOpen(false)}
+                        >
+                            <span className="material-symbols-rounded">
+                                close
+                            </span>
                         </button>
                     </div>
                     <div className="container mx-auto p-0 drop-shadow-sm bg-white w-11/12 rounded-[16px] ">
-                        <div className="grid md:grid-cols-3 mx-auto ">
+                        <div className="grid  md:grid-cols-3 mx-auto ">
                             <div
-                                className="px-0 border-r-[1px] border-gray-100 hover:cursor-pointer"
+                                className="px-0 border-t-[1px] md:border-r-[1px] border-gray-100 hover:cursor-pointer"
                                 onClick={() => setActive('location')}
                             >
                                 <div
@@ -144,7 +154,7 @@ const FadeMenu = ({
                             </div>
                         </div>
                     </div>
-                    <div className="container w-11/12 grid grid-cols-3 mx-auto">
+                    <div className="container w-11/12 grid md:grid-cols-3 mx-auto">
                         {active == 'location' && (
                             <div className="container py-8 px-6">
                                 <ul>
@@ -182,7 +192,7 @@ const FadeMenu = ({
                             </div>
                         )}
                         {active == 'guest' && (
-                            <div className="container col-start-2 py-11 px-6 ">
+                            <div className="container md:col-start-2 py-11 px-6 ">
                                 <div className="container mb-9">
                                     <p className="font-bold">Adults</p>
                                     <p className="text-gray-400 mb-[12px]">
@@ -231,6 +241,14 @@ const FadeMenu = ({
                                 </div>
                             </div>
                         )}
+                    </div>
+                    <div className=" flex md:hidden justify-center items-center">
+                        <button className="flex flex-row px-7 py-4 m-0 rounded-[16px] bg-primary text-white items-center font-bold hover:bg-[#ED6666]">
+                            <span className="material-symbols-rounded mr-[10px]">
+                                search
+                            </span>
+                            <p>Search</p>
+                        </button>
                     </div>
                 </div>
             </div>
