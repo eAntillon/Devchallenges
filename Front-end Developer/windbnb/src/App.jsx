@@ -8,16 +8,19 @@ function App() {
     const [country, setCountry] = useState('Finland');
     const [city, setCity] = useState('Helsinki');
     const [stays, setStays] = useState([]);
+    const [update, setUpdate] = useState(false);
+
 
     useEffect(() => {
         setStays(
             data.filter(
-                (stay) => stay.country === country && stay.city === city
+                (stay) => stay.country === country && stay.city === city && stay.maxGuests >= guests
             )
         );
         console.log('data', data);
         console.log('stays', stays);
-    }, []);
+        setUpdate(false);
+    }, [update]);
 
     const controls = animate(
         '.box',
@@ -39,6 +42,7 @@ function App() {
                     setCountry={setCountry}
                     setGuests={setGuests}
                     data={data}
+                    setUpdate={setUpdate}
                 />
             </div>
             <div className="container mx-auto mt-16 mb-11 px-5 md:px-0">

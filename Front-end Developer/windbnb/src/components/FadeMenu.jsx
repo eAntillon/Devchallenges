@@ -11,9 +11,10 @@ const FadeMenu = ({
     data,
     isOpen,
     setisOpen,
+    setUpdate,
 }) => {
     const [active, setActive] = useState('location');
-    const [adults, setadults] = useState(0);
+    const [adults, setadults] = useState(1);
     const [children, setchildren] = useState(0);
     const menu = useRef(null);
     const body = useRef(null);
@@ -22,7 +23,7 @@ const FadeMenu = ({
 
     useEffect(() => {
         setheight(menu.current.offsetHeight);
-        console.log(menu.current.offsetHeight)
+        console.log(menu.current.offsetHeight);
         if (isOpen) {
             animate('.fade-menu', { y: height }, { duration: 0.5 });
         }
@@ -30,7 +31,6 @@ const FadeMenu = ({
 
     useEffect(() => {
         if (isOpen) {
-            
             animate('.fade-menu', { y: height }, { duration: 0.5 });
             // rgba(79, 79, 79, 0.4)
             animate(
@@ -49,6 +49,14 @@ const FadeMenu = ({
         }
     }, [isOpen]);
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setGuests(adults + children);
+
+        setisOpen(false);
+        setUpdate(true);
+    };
+
     const activeClass =
         ' w-full px-7 py-2 h-full md:border-[1px] rounded-[16px] md:border-black drop-shadow-sm ';
     const defaultClass =
@@ -57,12 +65,10 @@ const FadeMenu = ({
 
     const addAdult = () => {
         setadults(adults + 1);
-        setGuests(adults + children);
     };
     const removeAdult = () => {
-        if (adults > 0) {
+        if (adults > 1) {
             setadults(adults - 1);
-            setGuests(adults + children);
         }
     };
     const addChild = () => {
@@ -72,7 +78,6 @@ const FadeMenu = ({
     const removeChild = () => {
         if (children > 0) {
             setchildren(children - 1);
-            setGuests(adults + children);
         }
     };
 
@@ -145,7 +150,10 @@ const FadeMenu = ({
                                 </div>
                             </div>
                             <div className="md:flex justify-center hidden">
-                                <button className="flex flex-row px-7 py-4 m-1 rounded-[16px] bg-primary text-white items-center font-bold hover:bg-[#ED6666]">
+                                <button
+                                    className="flex flex-row px-7 py-4 m-1 rounded-[16px] bg-primary text-white items-center font-bold hover:bg-[#ED6666]"
+                                    onClick={handleSubmit}
+                                >
                                     <span className="material-symbols-rounded mr-[10px]">
                                         search
                                     </span>
@@ -243,7 +251,10 @@ const FadeMenu = ({
                         )}
                     </div>
                     <div className=" flex md:hidden justify-center items-center">
-                        <button className="flex flex-row px-7 py-4 m-0 rounded-[16px] bg-primary text-white items-center font-bold hover:bg-[#ED6666]">
+                        <button
+                            className="flex flex-row px-7 py-4 m-0 rounded-[16px] bg-primary text-white items-center font-bold hover:bg-[#ED6666]"
+                            onClick={handleSubmit}
+                        >
                             <span className="material-symbols-rounded mr-[10px]">
                                 search
                             </span>

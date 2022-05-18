@@ -9,6 +9,7 @@ const Header = ({
     setCountry,
     setGuests,
     data,
+    setUpdate
 }) => {
     const [isOpen, setisOpen] = useState(false);
 
@@ -32,7 +33,7 @@ const Header = ({
                     className="bg-white px-5 py-5 text-[#BDBDBD] border-r-[1px] border-gray-100 hover:bg-gray-50 hover:text-gray-400"
                     onClick={start}
                 >
-                    Add guest
+                    {guests <= 1 ? 'Add guest' : guests + ' guests'}
                 </button>
                 <div>
                     <button className="bg-white px-5 h-full rounded-r-[16px] text-primary hover:cursor-default">
@@ -50,6 +51,7 @@ const Header = ({
                 data={data}
                 isOpen={isOpen}
                 setisOpen={setisOpen}
+                setUpdate={setUpdate}
             />
         </div>
     );
